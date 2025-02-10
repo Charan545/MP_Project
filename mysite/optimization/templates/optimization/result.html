@@ -4,10 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solution</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: url('/static/background.png') no-repeat center center fixed;
+            background-size: cover;
+            background-color: #0D0D0D;
+            color: #E0E0E0;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+        }
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #BB86FC;
+            text-shadow: 3px 3px 12px rgba(187, 134, 252, 0.5);
+        }
+        .solution-box {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #D0D0D0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            word-wrap: break-word;
+            text-align: left;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #E0E0E0;
+            background: #BB86FC;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background: #9b67f5;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-    <h1>Solution</h1>
-    <p>{{ solution|safe }}</p>
-    <a href="/">Back</a>
+    <div class="container">
+        <h1>Solution</h1>
+        <div class="solution-box">
+            <h2>Solution Output:</h2>
+            <pre>{{ solution|safe }}</pre>
+        </div>        
+        <a href="/" class="back-btn">Back to Home</a>
+    </div>
 </body>
 </html>

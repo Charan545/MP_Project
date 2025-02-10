@@ -5,11 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from scipy.optimize import linprog
-from django.shortcuts import render
 
 def home(request):
     return render(request, 'optimization/home.html')
-
 
 def index(request):
     form = OptimizationForm()
@@ -86,6 +84,62 @@ def solve_graphical(obj_func, constraints):
 
 def solve_modi(obj_func, constraints):
     try:
-        return "MODI method implementation coming soon."
+        print("MODI Method Started")  # Debugging Step 1
+
+        lines = obj_func.strip().split("\n")
+        cost_matrix = [list(map(int, line.split())) for line in lines]
+
+        supply_demand_lines = constraints.strip().split("\n")
+        supply = list(map(int, supply_demand_lines[0].split()))
+        demand = list(map(int, supply_demand_lines[1].split()))
+
+        print("Cost Matrix:", cost_matrix)  # Debugging Step 2
+        print("Supply:", supply)  # Debugging Step 3
+        print("Demand:", demand)  # Debugging Step 4
+
+        if sum(supply) != sum(demand):
+            return "Error: Supply and Demand must be equal."
+
+        result = modi_algorithm(cost_matrix, supply, demand)
+
+        print("MODI Output:", result)  # Debugging Step 5
+        return result
+
     except Exception as e:
         return f"Error: {e}"
+
+
+def modi_algorithm(cost_matrix, supply, demand):
+    num_sources = len(supply)
+    num_destinations = len(demand)
+
+    cost_matrix = np.array(cost_matrix)
+    supply = np.array(supply)
+    demand = np.array(demand)
+
+    allocation = np.zeros((num_sources, num_destinations), dtype=int)
+    remaining_supply = supply.copy()
+    remaining_demand = demand.copy()
+
+    print("Starting MODI Algorithm")  # Debugging Step 6
+
+    while np.sum(remaining_supply) > 0 and np.sum(remaining_demand) > 0:
+        min_cost = np.min(cost_matrix)
+        min_index = np.where(cost_matrix == min_cost)
+        row, col = min_index[0][0], min_index[1][0]
+
+        allocation_amount = min(remaining_supply[row], remaining_demand[col])
+        allocation[row, col] = allocation_amount
+
+        remaining_supply[row] -= allocation_amount
+        remaining_demand[col] -= allocation_amount
+
+        if remaining_supply[row] == 0:
+            cost_matrix[row, :] = np.inf
+        if remaining_demand[col] == 0:
+            cost_matrix[:, col] = np.inf
+
+    total_cost = np.sum(allocation * cost_matrix)
+
+    print("MODI Method Completed")  # Debugging Step 7
+    return f"Optimal Cost: {total_cost}, Final Allocation: {allocation.tolist()}"
