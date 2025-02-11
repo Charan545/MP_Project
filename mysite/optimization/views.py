@@ -109,6 +109,8 @@ def solve_modi(obj_func, constraints):
         return f"Error: {e}"
 
 
+
+
 def modi_algorithm(cost_matrix, supply, demand):
     num_sources = len(supply)
     num_destinations = len(demand)
