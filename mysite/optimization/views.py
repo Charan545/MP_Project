@@ -49,22 +49,28 @@ def solve_simplex(obj_func, constraints):
         A_ub = np.array(lhs_ineq)
         b_ub = np.array(rhs_ineq)
         res = linprog(-c, A_ub=A_ub, b_ub=b_ub, method='simplex')
-        return f'Optimal Solution: {res.x}, Objective Value: {-res.fun}'
+
+        return f'<p><strong>Optimal Solution:</strong> {res.x}</p><p><strong>Objective Value:</strong> {-res.fun}</p>'
     except Exception as e:
         return f'Error: {e}'
 
+
 def solve_graphical(obj_func, constraints):
     try:
-        plt.figure()
+        plt.figure(figsize=(8, 6))
+        x_vals = np.linspace(0, 10, 400)
+        feasible_region = []
+
         for constraint in constraints.strip().split("\n"):
             parts = constraint.strip().split("<=")
             if len(parts) != 2:
                 return "Error: Invalid constraint format."
             coef = [float(x) for x in parts[0].strip().split()]
             b = float(parts[1].strip())
-            x_vals = np.linspace(0, 10, 100)
             y_vals = (b - coef[0] * x_vals) / coef[1]
             plt.plot(x_vals, y_vals, label=constraint)
+            feasible_region.append((coef, b))
+        
         plt.xlim(0, 10)
         plt.ylim(0, 10)
         plt.xlabel("X-axis")
@@ -72,15 +78,46 @@ def solve_graphical(obj_func, constraints):
         plt.legend()
         plt.title("Graphical Method Solution")
         plt.grid()
+        
         static_dir = os.path.join(os.getcwd(), "static")
         if not os.path.exists(static_dir):
             os.makedirs(static_dir)
         graph_path = os.path.join(static_dir, "graph.png")
         plt.savefig(graph_path)
         plt.close()
-        return '<img src="/static/graph.png" alt="Graphical Solution">'
+
+        # Calculate intersection points of constraints
+        intersection_points = []
+        for i in range(len(feasible_region)):
+            for j in range(i + 1, len(feasible_region)):
+                A = np.array([feasible_region[i][0], feasible_region[j][0]])
+                b = np.array([feasible_region[i][1], feasible_region[j][1]])
+                try:
+                    solution = np.linalg.solve(A, b)
+                    if all(solution >= 0):
+                        intersection_points.append(solution)
+                except np.linalg.LinAlgError:
+                    continue
+        
+        intersection_points = np.array(intersection_points)
+        if intersection_points.size == 0:
+            return '<p>No feasible solution found.</p><img src="/static/graph.png" alt="Graphical Solution">'
+        
+        # Evaluate the objective function at each intersection point
+        obj_coef = np.array([float(x) for x in obj_func.strip().split()])
+        obj_values = np.dot(intersection_points, obj_coef)
+        max_index = np.argmax(obj_values)
+        optimal_solution = intersection_points[max_index]
+        optimal_value = obj_values[max_index]
+
+        result_html = f'<p><strong>Optimal Solution:</strong> X = {optimal_solution[0]:.2f}, Y = {optimal_solution[1]:.2f}</p>'
+        result_html += f'<p><strong>Objective Value:</strong> {optimal_value:.2f}</p>'
+        result_html += '<img src="/static/graph.png" alt="Graphical Solution">'
+        
+        return result_html
     except Exception as e:
         return f"Error: {e}"
+
 
 def solve_modi(obj_func, constraints):
     try:
