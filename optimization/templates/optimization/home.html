@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematical Programming</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: url('/static/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-color: #0D0D0D;
+            color: #E0E0E0;
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            width: 80%;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+        }
+        .navbar a {
+            color: #E0E0E0;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 15px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .navbar a:hover {
+            color: #BB86FC;
+        }
+        .content {
+            width: 80%;
+            margin: 30px auto;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(25px);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: left;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+        }
+        h1 {
+            font-size: 45px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #BB86FC;
+            text-align: center;
+            text-shadow: 3px 3px 12px rgba(187, 134, 252, 0.5);
+        }
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-top: 20px;
+            color: #BB86FC;
+            border-bottom: 2px solid #BB86FC;
+            padding-bottom: 5px;
+            text-shadow: 2px 2px 10px rgba(187, 134, 252, 0.5);
+        }
+        p, li {
+            font-size: 20px;
+            line-height: 1.8;
+            text-align: justify;
+            margin: 10px 0;
+            color: #D0D0D0;
+        }
+        ol {
+            padding-left: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="/solve">Solver Tool</a>
+    </div>
+    <div class="content">
+        <h1>Welcome to the Mathematical Programming Solver</h1>
+        <p>
+            This website provides tools to solve optimization problems using
+            different mathematical programming techniques such as Simplex, Graphical, and MODI Methods.
+        </p>
+        
+        <h2>Simplex Method</h2>
+        <p>
+            The Simplex Method is an algorithm used for solving linear programming problems.
+            It iteratively improves a feasible solution by moving along the edges of the
+            feasible region to reach the optimal solution.
+        </p>
+        <h3>Steps to Solve:</h3>
+        <ol>
+            <li>Formulate the objective function and constraints in standard form.</li>
+            <li>Set up the initial simplex tableau.</li>
+            <li>Identify the pivot column (most negative value in the bottom row).</li>
+            <li>Identify the pivot row (smallest ratio of right-hand side to pivot column value).</li>
+            <li>Perform row operations to update the tableau.</li>
+            <li>Repeat until no negative values remain in the bottom row.</li>
+        </ol>
+        
+        <h2>Graphical Method</h2>
+        <p>
+            The Graphical Method is used for solving linear programming problems with
+            two decision variables. It provides a visual representation of feasible solutions.
+        </p>
+        <h3>Steps to Solve:</h3>
+        <ol>
+            <li>Plot all constraints on a graph as linear equations.</li>
+            <li>Identify the feasible region where all constraints overlap.</li>
+            <li>Find the corner points of the feasible region.</li>
+            <li>Evaluate the objective function at each corner point.</li>
+            <li>Select the point that maximizes or minimizes the objective function.</li>
+        </ol>
+        
+        <h2>MODI Method</h2>
+        <p>
+            The MODI (Modified Distribution) Method is used for solving transportation problems.
+            It optimizes the initial basic feasible solution found using methods like the
+            Northwest Corner Rule or Least Cost Method.
+        </p>
+        <h3>Steps to Solve:</h3>
+        <ol>
+            <li>Find an initial feasible solution using a method like Northwest Corner.</li>
+            <li>Compute the dual variables (U, V) for each row and column.</li>
+            <li>Calculate opportunity costs for non-basic variables.</li>
+            <li>If all opportunity costs are non-negative, the solution is optimal.</li>
+            <li>If negative values exist, adjust allocations along a closed loop and repeat.</li>
+        </ol>
+        
+        <p>
+            Click on the <a href="/solve" style="color:#BB86FC;">Solver Tool</a> to start solving your problems!
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematical Programming Solver</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: url('/static/background1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-color: #0D0D0D;
+            color: #E0E0E0;
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+        }
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #BB86FC;
+            text-shadow: 3px 3px 12px rgba(187, 134, 252, 0.5);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        select, input, textarea {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #E0E0E0;
+        }
+        button {
+            width: 50%;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            background: #BB86FC;
+            border: none;
+            border-radius: 8px;
+            color: #E0E0E0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #9b67f5;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mathematical Programming Solver</h1>
+        <form method="post" action="/solve/">
+            {% csrf_token %}
+            <label for="method">Select Method:</label>
+            <select name="method" id="method">
+                <option value="simplex">Simplex Method</option>
+                <option value="graphical">Graphical Method</option>
+                <option value="modi">MODI Method</option>
+            </select>
+            <label for="objective_function">Objective Function / Cost Matrix:</label>
+            <textarea name="objective_function" id="objective_function" rows="3"></textarea>
+            <label for="constraints">Constraints / Supply & Demand:</label>
+            <textarea name="constraints" id="constraints" rows="5"></textarea>
+            <button type="submit">Solve</button>
+        </form>
+    </div>
+</body>
+</html>
